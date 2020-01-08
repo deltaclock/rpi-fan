@@ -18,7 +18,7 @@ func getTemp() (uint64, error) {
 
 	defer file.Close()
 
-	buffer := make([]byte, 6)
+	buffer := make([]byte, 7)
 
 	count, err := file.Read(buffer)
 
@@ -26,7 +26,7 @@ func getTemp() (uint64, error) {
 		panic(err)
 	}
 
-	temp := string(buffer[:count])
+	temp := string(buffer[:count-1])
 	tempC, err := strconv.ParseUint(temp, 10, 64)
 
 	if err != nil {

@@ -9,7 +9,7 @@ import (
 
 const (
 	// MaxTemp is the limit at which the fan will start running
-	MaxTemp = 65
+	MaxTemp = 50
 	// INTERVAL defines how often to check the temp
 	INTERVAL = time.Second * 5
 )
@@ -26,6 +26,7 @@ func main() {
 	pin := rpio.Pin(4) // GPIO4
 	pin.Mode(rpio.Output)
 	pin.Write(rpio.Low)
+	spinning := false
 
 	for {
 		temp, err := getTemp()
@@ -33,12 +34,14 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		if temp >= MaxTemp {
+		if temp >= MaxTemp && !spinning {
 			pin.Write(rpio.High)
-		} else {
+			spinning = true
+		} else if temp < MaxTemp && spinning {
 			pin.Write(rpio.Low)
+			spinning = false
 		}
-		fmt.Printf("Temp is at %d C", temp)
+		fmt.Printf("Temp is at %d C\n", temp)
 		time.Sleep(INTERVAL)
 	}
 

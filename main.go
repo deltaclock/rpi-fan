@@ -34,6 +34,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+
 		if temp >= MaxTemp && !spinning {
 			pin.Write(rpio.High)
 			spinning = true
@@ -41,6 +42,7 @@ func main() {
 			pin.Write(rpio.Low)
 			spinning = false
 		}
+
 		fmt.Printf("Temp is at %d C\n", temp)
 		time.Sleep(INTERVAL)
 	}

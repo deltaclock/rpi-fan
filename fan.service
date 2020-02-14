@@ -1,0 +1,26 @@
+[Unit]
+Description=Fan Handler
+ConditionPathExists=/storage/rpi-fan
+ 
+[Service]
+Type=simple
+User=root
+Group=root
+
+Restart=on-failure
+RestartSec=10
+
+WorkingDirectory=/storage
+ExecStart=/storage/rpi-fan
+
+# make sure log directory exists and owned by syslog
+#PermissionsStartOnly=true
+#ExecStartPre=/bin/mkdir -p /var/log/sleepservice
+#ExecStartPre=/bin/chown syslog:adm /var/log/sleepservice
+#ExecStartPre=/bin/chmod 755 /var/log/sleepservice
+#StandardOutput=syslog
+#StandardError=syslog
+#SyslogIdentifier=sleepservice
+ 
+[Install]
+WantedBy=multi-user.target

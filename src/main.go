@@ -20,7 +20,7 @@ var options struct {
 }
 
 func init() {
-	flag.IntVar(&options.MaxTemp, "temp", 45, "start fan after this temperature has been reached")
+	flag.IntVar(&options.MaxTemp, "temp", 50, "start fan after this temperature has been reached")
 	flag.StringVar(&options.TempFile, "file", "/sys/class/thermal/thermal_zone0/temp", "path to the temp report")
 	flag.DurationVar(&options.Interval, "time", 10*time.Second, "how often to check the temp")
 }

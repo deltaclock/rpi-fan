@@ -11,4 +11,4 @@ COPY *.go ./
 
 RUN go build -o /fanner
 
-CMD [ "/fanner" ]
+CMD [ "/fanner", "-file", "/temp" ]

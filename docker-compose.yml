@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+
+  fanner:
+    build:
+      context: ./src
+    restart: unless-stopped
+    devices:
+      - /dev/gpiomem:/dev/gpiomem
+    volumes:
+      - /sys/class/thermal/thermal_zone0/temp:/temp:ro

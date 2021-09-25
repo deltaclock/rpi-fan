@@ -84,6 +84,7 @@ func main() {
 		if temp >= options.MaxTemp && !spinning {
 			pin.Write(rpio.High)
 			spinning = true
+			lastSpike = next
 		} else if temp < options.MaxTemp && spinning {
 			// check if a minute has passes since last spike
 			if next.Sub(lastSpike) > time.Minute {

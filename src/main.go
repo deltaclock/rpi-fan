@@ -57,6 +57,7 @@ func getTemp(tempFile string) int {
 }
 
 func main() {
+	flag.Parse()
 	err := rpio.Open()
 
 	if err != nil {

@@ -74,18 +74,22 @@ func main() {
 	pin.Write(rpio.Low)
 
 	spinning := false
+	lastSpike := time.Now()
 
 	c := time.Tick(options.Interval)
 
-	for range c {
+	for next := range c {
 		temp := getTemp(options.TempFile)
 
 		if temp >= options.MaxTemp && !spinning {
 			pin.Write(rpio.High)
 			spinning = true
 		} else if temp < options.MaxTemp && spinning {
-			pin.Write(rpio.Low)
-			spinning = false
+			// check if a minute has passes since last spike
+			if next.Sub(lastSpike) > time.Minute {
+				pin.Write(rpio.Low)
+				spinning = false
+			}
 		}
 
 		fmt.Printf("Temp is at %d C\n", temp)
